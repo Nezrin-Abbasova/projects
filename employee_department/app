@@ -1,6 +1,6 @@
 from db import get_connection
 from validation import is_valid
-from employee_repostery import data_insert, data_select, salary_check
+from employee_repository import data_insert, data_select, salary_check
 from department_statistics import departments_statistics, output
 
 
