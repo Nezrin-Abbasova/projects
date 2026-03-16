@@ -1,0 +1,38 @@
+def dep_id_name(department_name, conn):
+    deps_id = {}
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM employee_department')
+    for row in cursor:
+        deps_id[row[2].lower()] = row[3]
+    department_name = department_name.lower().strip()
+    if department_name in deps_id.keys():
+        return deps_id[department_name]
+    else:
+        return None
+    
+def data_insert(name, salary, department_name, conn):
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO employee_department (name, salary, department_name) VALUES (:1, :2, :3)', (name, salary, department_name))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def data_select(conn):
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM employee_department')
+    return cursor.fetchall()
+
+def salary_check(conn):
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM employee_department')
+    high_paid = []
+    for row in cursor:
+        if row[1] > 500:
+            high_paid.append(row)
+    n = len(high_paid)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if high_paid[j][1] < high_paid[j + 1][1]:
+                high_paid[j], high_paid[j+1] = high_paid[j+1], high_paid[j]
+                
+    return high_paid
