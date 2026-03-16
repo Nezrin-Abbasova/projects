@@ -1,0 +1,50 @@
+from database import create_tables
+from models import register_user,add_course, enroll_user_in_course
+
+
+create_tables()
+
+def main():
+    while True:
+        print("\n--- COURSE SYSTEM ---")
+        print("1. Register a new user")
+        print("2. Add a new course")
+        print("3. Enroll to a course")
+        print("0. Exit")
+
+        choice = input("Your choice: ")
+
+        if choice == "1":
+            username = input("Username: ")
+            password = input("Password: ")
+            if register_user(username, password):
+                print("New user registered successfully !")
+            else:
+                print("Process failed !")
+
+        elif choice == "2":
+            name = input("Course name: ")
+            description = input("About: ")
+            if add_course(name, description):
+                print("New course added successfully !")
+            else:
+                print("Process failed !")
+        
+        elif choice == "3":
+            try:
+                user_id = int(input("User ID: "))
+                course_id = int(input("Course ID: "))
+                if enroll_user_in_course(user_id, course_id):
+                    print("User enrolled successfully !")
+                else:
+                    print("Process failed !")
+            except ValueError:
+                print("ID must consist of only numbers !")
+        elif choice == "0":
+            print("Exiting...")
+            break
+        else:
+            print("Choice is invalid !")
+
+if __name__ == '__main__':
+    main()
