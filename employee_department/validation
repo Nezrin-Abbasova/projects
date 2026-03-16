@@ -1,0 +1,27 @@
+def is_valid(name, salary, department_name):
+    alpha = 0
+    for i in name:
+        if i.isalpha():
+            alpha += 1
+    
+    alpha2 = 0
+    for j in department_name:
+        if j.isalpha():
+            alpha2 += 1
+            
+    if not alpha:
+        return False
+    
+    elif not alpha2:
+        return False
+    
+    elif not name:
+        print('Name cannot be empty')
+        return False
+    
+    elif salary < 0:
+        print('Salary cannot be negative')
+        return False
+
+    else:
+        return True
