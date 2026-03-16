@@ -1,0 +1,25 @@
+def departments_statistics(conn):
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM employee_department')
+    dep_salaries = {}
+    for row in cursor:
+        dep_name = str(row[2].lower())
+        salaries = row[1]
+        if dep_name not in dep_salaries:
+            dep_salaries[dep_name] = []
+        dep_salaries[dep_name].append(salaries)
+
+    min_max_salaries ={}
+    for key, value in dep_salaries.items():
+        dep = key
+        max_salary = max(value)
+        min_salary = min(value)
+        if dep not in min_max_salaries:
+            min_max_salaries[dep] = []
+        min_max_salaries[dep].append(max_salary)
+        min_max_salaries[dep].append(min_salary)
+    return min_max_salaries
+
+def output(min_max_salaries):
+    for dep, sal in min_max_salaries.items():
+        print(f'Department : {dep.capitalize()} --- Max salary : {sal[0]} Min salary : {sal[1]}')
