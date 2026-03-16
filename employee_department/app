@@ -1,0 +1,48 @@
+from db import get_connection
+from validation import is_valid
+from employee_repostery import data_insert, data_select, salary_check
+from department_statistics import departments_statistics, output
+
+
+def main():
+    while True:
+        conn = get_connection()
+        print('\n---EMPLOYEE DATA---')
+        print('1. Insert new employee')
+        print('2. View all data')
+        print('3. Department statistics')
+        print('4. Descending (only salaries more than 500)')
+        print('5. Exit')
+
+        choice = int(input('Your choice : '))
+
+        if choice == 1:
+            name = input('Enter your name : ')
+            salary = int(input('Enter your salary : '))
+            department_name = input('Enter your department name : ')
+            if is_valid(name, salary, department_name):
+                data_insert(name, salary, department_name, conn)
+                print('New employee data is inserted successfully !')
+            else:
+                print('New employee data is not inserted !')
+
+        elif choice == 2:
+            all_datum = data_select(conn)
+            print(all_datum)
+        
+        elif choice == 3:
+            salary = departments_statistics(conn)
+            output(salary)
+
+        elif choice == 4:
+            descending = salary_check(conn)
+            print(descending)
+
+        elif choice == 5:
+            print('Exit')
+            break
+
+        else:
+            print('Invalid choice !')
+if __name__ == '__main__':
+    main()
