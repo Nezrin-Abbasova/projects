@@ -1,0 +1,16 @@
+import oracledb
+
+def get_connection():
+    return oracledb.connect(
+        user='nezrin',
+        password='12345',
+        dsn='localhost/orcl21c2'
+    )
+
+def create_table():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute('CREATE TABLE employee_department (name VARCHAR2(30), salary INT, department_name VARCHAR2(50))')
+    conn.commit()
+    cursor.close()
+    conn.close()
